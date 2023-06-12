@@ -1,5 +1,21 @@
 import { useState } from 'react'
 
+const Statistics = (props) => {
+  console.log(props)
+  return (
+    <div>
+    <p>good: {props.nmb_g}</p>
+    <p>neutral: {props.nmb_n}</p>
+    <p>bad: {props.nmb_b}</p>
+    <p>all: {props.nmb_a}</p>
+    <p>average: {(props.nmb_g-props.nmb_b)/props.nmb_a}</p>
+    <p>positive: {100*props.nmb_g/props.nmb_a} %</p>
+    </div>
+    
+  )
+  
+}
+
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
@@ -36,12 +52,8 @@ const App = () => {
         <Button handleClick={handleNeutralClick} text='neutral' />
         <Button handleClick={handleBadClick} text='bad' />
         <h1>Statistics</h1>
-        <p>good: {good}</p>
-        <p>neutral: {neutral}</p>
-        <p>bad: {bad}</p>
-        <p>all: {all}</p>
-        <p>average: {(good-bad)/all}</p>
-        <p>positive: {100*good/all} %</p>
+        <Statistics nmb_g={good} nmb_n={neutral} nmb_b={bad} nmb_a={all} />
+        
       </div>
     </div>
   )
