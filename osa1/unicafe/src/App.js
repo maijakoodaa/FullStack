@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const Statistics = (props) => {
   console.log(props)
+  if (props.nmb_a == 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
   return (
     <div>
     <p>good: {props.nmb_g}</p>
@@ -51,9 +56,10 @@ const App = () => {
         <Button handleClick={handleGoodClick} text='good' />
         <Button handleClick={handleNeutralClick} text='neutral' />
         <Button handleClick={handleBadClick} text='bad' />
-        <h1>Statistics</h1>
-        <Statistics nmb_g={good} nmb_n={neutral} nmb_b={bad} nmb_a={all} />
-        
+      </div>
+      <div>
+      <h1>Statistics</h1>
+      <Statistics nmb_g={good} nmb_n={neutral} nmb_b={bad} nmb_a={all} />
       </div>
     </div>
   )
