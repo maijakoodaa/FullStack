@@ -3,11 +3,33 @@ import { useState } from 'react'
 const StatisticLine = (props) => {
   if (props.text == "positive") {
     return (
-      <p>{props.text}: {props.value} %</p>
+      <table>
+        <tbody>
+          <tr>
+            <td width="100px">
+              {props.text}
+            </td>
+            <td>
+              {props.value} %
+            </td>
+          </tr>
+        </tbody>
+      </table>
     )
   }
   return (
-    <p>{props.text}: {props.value}</p>
+    <table>
+      <tbody>
+        <tr>
+          <td width="100px">
+            {props.text}
+          </td>
+          <td>
+            {props.value}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   )
 }
 
@@ -20,12 +42,19 @@ const Statistics = (props) => {
   }
   return (
     <div>
-    <StatisticLine text="good" value ={props.nmb_g} />
-    <StatisticLine text="neutral" value ={props.nmb_n} />
-    <StatisticLine text="bad" value ={props.nmb_b} />
-    <StatisticLine text="all" value ={props.nmb_a} />
-    <StatisticLine text="average" value ={(props.nmb_g-props.nmb_b)/props.nmb_a} />
-    <StatisticLine text="positive" value ={100*props.nmb_g/props.nmb_a} />
+
+          <StatisticLine text="good" value ={props.nmb_g} />
+
+          <StatisticLine text="neutral" value ={props.nmb_n} />
+
+          <StatisticLine text="bad" value ={props.nmb_b} />
+
+          <StatisticLine text="all" value ={props.nmb_a} />
+
+          <StatisticLine text="average" value ={(props.nmb_g-props.nmb_b)/props.nmb_a} />
+
+          <StatisticLine text="positive" value ={100*props.nmb_g/props.nmb_a} />
+    
     </div>
     
   )
