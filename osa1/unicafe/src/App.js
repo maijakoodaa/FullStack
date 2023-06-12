@@ -1,5 +1,16 @@
 import { useState } from 'react'
 
+const StatisticLine = (props) => {
+  if (props.text == "positive") {
+    return (
+      <p>{props.text}: {props.value} %</p>
+    )
+  }
+  return (
+    <p>{props.text}: {props.value}</p>
+  )
+}
+
 const Statistics = (props) => {
   console.log(props)
   if (props.nmb_a == 0) {
@@ -9,12 +20,12 @@ const Statistics = (props) => {
   }
   return (
     <div>
-    <p>good: {props.nmb_g}</p>
-    <p>neutral: {props.nmb_n}</p>
-    <p>bad: {props.nmb_b}</p>
-    <p>all: {props.nmb_a}</p>
-    <p>average: {(props.nmb_g-props.nmb_b)/props.nmb_a}</p>
-    <p>positive: {100*props.nmb_g/props.nmb_a} %</p>
+    <StatisticLine text="good" value ={props.nmb_g} />
+    <StatisticLine text="neutral" value ={props.nmb_n} />
+    <StatisticLine text="bad" value ={props.nmb_b} />
+    <StatisticLine text="all" value ={props.nmb_a} />
+    <StatisticLine text="average" value ={(props.nmb_g-props.nmb_b)/props.nmb_a} />
+    <StatisticLine text="positive" value ={100*props.nmb_g/props.nmb_a} />
     </div>
     
   )
