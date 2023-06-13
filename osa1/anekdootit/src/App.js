@@ -21,6 +21,7 @@ const App = () => {
 
   const [votes, setVotes] = useState(Array(8).fill(0))
 
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -38,16 +39,19 @@ const App = () => {
     copy[selected] += 1
     console.log('selected', selected)
     setVotes(copy)
-    console.log('votes', votes[selected])
   }
 
   const handleClick = () => {
     console.log('clicked the button')
     setSelected(getRandomInt(0, 7))
   }
-console.log('initial', votes[1])
+
+  const getMostVotedIndex = votes.indexOf(Math.max(...votes))
+
+console.log('initial', votes[selected])
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       
       <br></br>
@@ -57,6 +61,9 @@ console.log('initial', votes[1])
       <br></br>
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleClick}>Next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[getMostVotedIndex]}</p>
+      <p>Has {votes[getMostVotedIndex]} votes</p>
     </div>
   )
 }
