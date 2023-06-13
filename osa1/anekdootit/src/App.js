@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+// const Vote = (props) => {
+//   console.log(props)
+//   vote_table
+// }
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -14,24 +19,43 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
 
+  const [votes, setVotes] = useState(Array(8).fill(0))
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  const handleVote = () => {
+    console.log('voted')
+    //constvote_table = [...vote_table]
+// kasvatetaan taulukon paikan 2 arvoa yhdellä
+    // const copy = [ ...vote_table]
+    // copy[(selected)] += 1  
+    // vote_table = copy
+    const copy = [...votes]
+    copy[selected] += 1
+    console.log('selected', selected)
+    setVotes(copy)
+    console.log('votes', votes[selected])
+  }
+
   const handleClick = () => {
     console.log('clicked the button')
     setSelected(getRandomInt(0, 7))
-    console.log(selected)
   }
-
-
-
+console.log('initial', votes[1])
   return (
     <div>
       {anecdotes[selected]}
+      
       <br></br>
+      <p>
+        Has {votes[selected]} votes
+      </p>
+      <br></br>
+      <button onClick={handleVote}>Vote</button>
       <button onClick={handleClick}>Next anecdote</button>
     </div>
   )
