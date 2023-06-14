@@ -33,14 +33,18 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <p>
-        {props.text} {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}
-      </p>
-    </div>
-  )
+  console.log('totalin propsit', props)
+  const parts_map = props.parts.map(course => course.exercises)
+  let sum = parts_map.reduce(function(a, b){
+    return a + b;
+  });
+return (
+  <div>
+    <b>total of {sum} exercises</b>
+  </div>
+  
+)
+
 }
 
 const Course = (props) => {
@@ -49,6 +53,7 @@ const Course = (props) => {
     <div>
       <Header course={props.course.name} />
       <Content parts={props.course.parts} />
+      <Total parts={props.course.parts} />
     </div>
   )
 }
@@ -79,7 +84,6 @@ const App = () => {
   return (
     <div>
       <Course course={course} />
-      
     </div>
   )
 }
