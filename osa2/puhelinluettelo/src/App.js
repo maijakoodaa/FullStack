@@ -13,6 +13,14 @@ const App = (props) => {
       id: persons.length + 1,
     }
   
+    console.log(nameObject.name)
+    console.log(persons)
+
+    if (persons.find(e => e.name === nameObject.name)) {
+      alert(`${nameObject.name} is already added to phonebook`)
+      return
+    }
+    
     setPersons(persons.concat(nameObject))
     setNewName('')
     console.log(persons)
@@ -35,10 +43,11 @@ const App = (props) => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <ul>
+      
+      <p>
       {persons.map((person) => (
-        <li key={person.id}>{person.name}</li>))}
-      </ul>
+        <p key={person.id}>{person.name}</p>))}
+      </p>
     </div>
   )
 
