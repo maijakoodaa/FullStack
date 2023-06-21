@@ -3,7 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-
+import personService from './services/personser'
 
 const App = (props) => {
   const [persons, setPersons] = useState([
@@ -16,12 +16,19 @@ const App = (props) => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
 
+  useEffect(() => {
+    personService
+      .getAll()
+        .then(initialPersons => {
+        setPersons(initialPersons)
+      })
+  }, [])
+
   const addPerson = (event) => {
     event.preventDefault()
     const nameObject = {
       name: newName,
       number: newNumber,
-      //id: persons.length + 1,
     }
 
     console.log(nameObject.name)
@@ -33,13 +40,14 @@ const App = (props) => {
       return
     }
 
-    axios
-    .post('http://localhost:3001/persons', nameObject)
-    .then(response => {
-      setPersons(persons.concat(response.data))
-      setNewName('')
-      setNewNumber('')
-    })
+    personService
+      .create(nameObject)
+      .then(returnedName => {
+        setPersons(persons.concat(returnedName))
+        setNewName('')
+        setNewNumber('')
+      })
+      
   }
 
   const handleNameChange = (event) => {
@@ -59,18 +67,6 @@ const App = (props) => {
 
   const PersonsToShow = persons.filter((person) =>
     person.name.toLowerCase().includes(newFilter.toLocaleLowerCase()))
-
-
-    useEffect(() => {
-      console.log('effect')
-      axios
-        .get('http://localhost:3001/persons')
-        .then(response => {
-          console.log('promise fulfilled')
-          setPersons(response.data)
-        })
-    }, [])
-    console.log('render', persons.length, 'persons')
 
   return (
     <div>
