@@ -21,9 +21,9 @@ const App = (props) => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      //id: persons.length + 1,
     }
-  
+
     console.log(nameObject.name)
     console.log(nameObject.number)
     console.log(persons)
@@ -32,11 +32,14 @@ const App = (props) => {
       alert(`${nameObject.name} is already added to phonebook`)
       return
     }
-    
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
-    console.log(persons)
+
+    axios
+    .post('http://localhost:3001/persons', nameObject)
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      setNewNumber('')
+    })
   }
 
   const handleNameChange = (event) => {
