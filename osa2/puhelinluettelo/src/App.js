@@ -71,18 +71,22 @@ const App = (props) => {
     person.name.toLowerCase().includes(newFilter.toLocaleLowerCase()))
 
   const removePersons = (name, id) => {
-    return (
-      personService
-        .remove(id)
-        .then(() => {
-          setPersons(persons.filter(nam => nam.id !== id))
-          setNewName('')
-          setNewNumber('')
-        }
-          
+    if (window.confirm(`Delete ${name} ?`)) {
+      return (
+        personService
+          .remove(id)
+          .then(() => {
+            setPersons(persons.filter(nam => nam.id !== id))
+            setNewName('')
+            setNewNumber('')
+          }
+        )
       )
-
-    )
+    }
+    else {
+      return
+    }
+    
     
   }
   return (
