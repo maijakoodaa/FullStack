@@ -5,12 +5,14 @@ import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personService from './services/personser'
 
+import { v4 as uuidv4 } from 'uuid';
+
 const App = (props) => {
   const [persons, setPersons] = useState([
-   // { name: 'Arto Hellas', number: '040-123456' },
-   // { name: 'Ada Lovelace', number: '39-44-5323523' },
-   // { name: 'Dan Abramov', number: '12-43-234345' },
-   // { name: 'Mary Poppendieck', number: '39-23-6423122' }
+    // { name: 'Arto Hellas', number: '040-123456', id: '040123456'},
+    // { name: 'Ada Lovelace', number: '39-44-5323523', id: '39445323523'},
+    // { name: 'Dan Abramov', number: '12-43-234345', id: '1243234345'},
+    // { name: 'Mary Poppendieck', number: '39-23-6423122', id: '39236423122' }
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
@@ -29,6 +31,7 @@ const App = (props) => {
     const nameObject = {
       name: newName,
       number: newNumber,
+      id: uuidv4()
     }
 
     console.log(nameObject.name)
@@ -42,12 +45,11 @@ const App = (props) => {
 
     personService
       .create(nameObject)
-      .then(returnedName => {
+      .then((returnedName) => {
         setPersons(persons.concat(returnedName))
         setNewName('')
         setNewNumber('')
       })
-      
   }
 
   const handleNameChange = (event) => {
@@ -68,6 +70,21 @@ const App = (props) => {
   const PersonsToShow = persons.filter((person) =>
     person.name.toLowerCase().includes(newFilter.toLocaleLowerCase()))
 
+  const removePersons = (name, id) => {
+    return (
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(nam => nam.id !== id))
+          setNewName('')
+          setNewNumber('')
+        }
+          
+      )
+
+    )
+    
+  }
   return (
     <div>
       <h2>Phonebook</h2>
@@ -82,7 +99,7 @@ const App = (props) => {
       
       <h2>Numbers</h2>
 
-      <Persons PersonsToShow={PersonsToShow} />
+      <Persons PersonsToShow={PersonsToShow} Remove={removePersons} />
 
     </div>
   )
