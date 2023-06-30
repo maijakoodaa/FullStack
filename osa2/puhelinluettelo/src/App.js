@@ -38,19 +38,27 @@ const App = (props) => {
     console.log(nameObject.number)
     console.log(persons)
 
-    if (persons.find(e => e.name === nameObject.name)) {
-      alert(`${nameObject.name} is already added to phonebook`)
-      return
-    }
-
-    personService
-      .create(nameObject)
-      .then((returnedName) => {
-        setPersons(persons.concat(returnedName))
-        setNewName('')
-        setNewNumber('')
+    const samePerson = persons.find(e => e.name === nameObject.name)
+    if (samePerson) {
+      if (window.confirm(`${nameObject.name} is already added to phonebook, replace the old number with a new one?`)) {
+        personService
+          .update(samePerson.id, nameObject)
+          .then((returnedName) => {
+            setPersons(persons.map((person) => person.id !== samePerson.id ? person : returnedName))
       })
+      setNewName('')
+      setNewNumber('')
+    }
+    return
   }
+  personService
+    .create(nameObject)
+    .then((returnedName) => {
+      setPersons(persons.concat(returnedName))
+      setNewName('')
+      setNewNumber('')
+    })
+}
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -86,9 +94,8 @@ const App = (props) => {
     else {
       return
     }
-    
-    
   }
+
   return (
     <div>
       <h2>Phonebook</h2>
