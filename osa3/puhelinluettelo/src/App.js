@@ -39,6 +39,28 @@ const App = (props) => {
     console.log(nameObject.number)
     console.log(persons)
 
+    if (newName == '') {
+      setSuccessful('no')
+      setMessage(
+        `Name missing`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+      return
+    }
+
+    if (newNumber == '') {
+      setSuccessful('no')
+      setMessage(
+        `Number missing`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+      return
+    }
+
     const samePerson = persons.find(e => e.name === nameObject.name)
     if (samePerson) {
       if (window.confirm(`${nameObject.name} is already added to phonebook, replace the old number with a new one?`)) {
