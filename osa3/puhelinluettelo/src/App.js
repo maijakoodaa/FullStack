@@ -39,7 +39,7 @@ const App = (props) => {
     console.log(nameObject.number)
     console.log(persons)
 
-    if (newName == '') {
+    if (newName === '') {
       setSuccessful('no')
       setMessage(
         `Name missing`
@@ -50,7 +50,7 @@ const App = (props) => {
       return
     }
 
-    if (newNumber == '') {
+    if (newNumber === '') {
       setSuccessful('no')
       setMessage(
         `Number missing`
