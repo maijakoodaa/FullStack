@@ -2,37 +2,16 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Filter from './components/Filter';
-/*import Country from './components/Country';
-
-const Countries = ({countries, searchValue}) => {
-  let searchResult = []
-  if (searchResult.length > 10) {
-    return (
-      <p>Too many matches, specify another filter</p>
-    )
-  }
-  else if (searchResult.length > 1) {
-    return (
-      <div>
-        <ul>
-          {searchResult.map(country =><Country />)}
-        </ul>
-      </div>
-    )
-  }
-}
-*/
+import Country from './components/Country';
 
 const App = () => {
   const [search, setSearch] = useState('')
   const [countries, setCountries] = useState([])
-  const [country, setCountry] = useState(null)
 
 
 const getCountries = () => {
   if (search === '') {
     setCountries([])
-    setCountry(null)
     return
   }
   console.log('fetching country informations...')
@@ -48,19 +27,13 @@ const getCountries = () => {
     getCountries()
   }, [search])
     
-
   const handleChange = (event) => {
     setSearch(event.target.value)
   }
 
   const showCountry = (country) => {
-    setCountry(country)
+    setCountries([country])
   }
-  
-  // Nyt ei crashaa, mutta tulee aina too many matches
-  // Nyt ei tule enää mitään tulosta, vaikka laittaisi s tai Sweden.
-  // 
-  // 
 
   return (
     <div>
@@ -73,32 +46,13 @@ const getCountries = () => {
       ) : countries.length > 1 ? (
         <ul>
           {countries.map(country => (
-            <li key={country.name.common} onClick={() => showCountry(country)}>
-              {country.name.common}
+            <li key={country.name.common} >
+              {country.name.common} <button onClick={() => showCountry(country)}>show</button>
             </li>
           ))}
         </ul>
-      ) : countries.length === 1 && (
-        <div>
-          <h2>{countries[0].name.common}</h2>
-          <p>capital {countries[0].capital}<br></br>area {countries[0].area}</p>
-          <h4>languages:</h4>
-          <ul>
-            {Object.values(countries[0].languages).map(language => (
-              <li key={language}>{language}</li>
-            ))}
-          </ul>
-          <img
-            src={countries[0].flags.png}
-            alt={`${countries[0].name.common} flag`}
-            width="200"
-          />
-        </div>
-      )}
-
-
+      ) : countries.length === 1 && <Country country={countries[0]} />}
       </div>
-      {}
     </div>
     
   )
